@@ -1,0 +1,21 @@
+# This is a git repository cloning task for Dev Box
+
+$schema: 1.0
+name: check-env
+description: Some check script in devbox environment
+author: Ayumu Inaba
+command: ./main.ps1
+parameters:
+  name:
+    default: ''
+    type: string
+    required: true
+    description: Input your name.
+documentation:
+  notes: |
+    This task is sample and check devbox environment.
+  examples:
+    - name: check-env
+      description: Check Environment
+      parameters:
+        name: ayuina
