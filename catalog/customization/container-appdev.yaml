@@ -10,39 +10,44 @@ tasks:
     parameters:
       repositoryUrl: https://github.com/ayuina/azure-devcenter-demo1.git
       directory: C:\Workspaces
+  - name: git-clone
+    description: Clone application repository into C:\Workspaces
+    parameters:
+      repositoryUrl: https://github.com/ayuina/aoai-image-analyzer-sample.git
+      directory: C:\Workspaces
   - name: choco
     description: Install VSCode
     parameters:
       package: vscode
-  - name: powershell
-    description: Install vsextensions
+  - name: choco
+    description: Install Docker Desktop
     parameters:
-      command: |
-        code --install-extension ms-vscode.powershell
-        code --install-extension devcenter.ms-devbox
-        code --install-extension ms-azuretools.vscode-docker
-        code --install-extension ms-vscode-remote.vscode-remote-extensionpack
-  - name: winget
-    description: Install Docker Desktop 
-    parameters:
-      package: Docker.DockerDesktop
+      package: docker-desktop
   - name: powershell
-    description: Start docker service and Set as automatic startup
+    description: Setup docker desktop
     parameters:
       command: |
         Write-Host 'Start docker service and Set as automatic startup'
         $svcname = 'com.docker.service'
         Set-Service -Name $svcname -StartupType Automatic
         Start-Service -Name $svcname
-  - name: powershell
-    description: Add Autheticated users to Docker users group
-    parameters:
-      command: |
+
         Write-Host "Add Autheticated users to Docker users group"
         $AuthUsersSID = 'S-1-5-11'
         $ismember = ( Get-LocalGroupMember -Name 'docker-users' | where {$_.SID -eq $AuthUsersSID} ).Length -gt 0
         if($ismember -eq $false) {
           Add-LocalGroupMember -Group 'docker-users' -Member $AuthUsersSID
         }
+  - name: powershell
+    description: Install for user profile vscode extensions
+    parameters:
+      command: |
+        code --install-extension ms-vscode.powershell
+        code --install-extension devcenter.ms-devbox
+        code --install-extension ms-azuretools.vscode-docker
+        code --install-extension ms-vscode-remote.vscode-remote-extensionpack
+
+        Start-Process -FilePath "$Env:ProgramFiles\Docker\Docker\Docker Desktop.exe"
+      runAsUser: true
 
     
