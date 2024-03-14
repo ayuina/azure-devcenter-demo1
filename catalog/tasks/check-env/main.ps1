@@ -8,11 +8,11 @@ function Main {
     Write-Host ""
 
     Write-Host '=== Current Location ==='
-    Get-Location
+    Write-Host @(Get-Location)
     Write-Host ""
 
     Write-Host '=== PSScriptRoot ==='
-    $PSScriptRoot
+    Write-Host "$PSScriptRoot"
     Write-Host ""
 
     Write-Host '=== Environment Variables ==='
