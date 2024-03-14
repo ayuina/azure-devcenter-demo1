@@ -1,0 +1,48 @@
+$schema: "1.0"
+name: "devbox-customization"
+tasks:
+  - name: check-env
+    description: Check Environment
+    parameters:
+      name: ayuina
+  - name: git-clone
+    description: Clone this repository into C:\Workspaces
+    parameters:
+      repositoryUrl: https://github.com/ayuina/azure-devcenter-demo1.git
+      directory: C:\Workspaces
+  - name: choco
+    description: Install VSCode
+    parameters:
+      package: vscode
+  - name: powershell
+    description: Install vsextensions
+    parameters:
+      command: |
+        code --install-extension ms-vscode.powershell
+        code --install-extension devcenter.ms-devbox
+        code --install-extension ms-azuretools.vscode-docker
+        code --install-extension ms-vscode-remote.vscode-remote-extensionpack
+  - name: winget
+    description: Install Docker Desktop 
+    parameters:
+      package: Docker.DockerDesktop
+  - name: powershell
+    description: Start docker service and Set as automatic startup
+    parameters:
+      command: |
+        Write-Host 'Start docker service and Set as automatic startup'
+        $svcname = 'com.docker.service'
+        Set-Service -Name $svcname -StartupType Automatic
+        Start-Service -Name $svcname
+  - name: powershell
+    description: Add Autheticated users to Docker users group
+    parameters:
+      command: |
+        Write-Host "Add Autheticated users to Docker users group"
+        $AuthUsersSID = 'S-1-5-11'
+        $ismember = ( Get-LocalGroupMember -Name 'docker-users' | where {$_.SID -eq $AuthUsersSID} ).Length -gt 0
+        if($ismember -eq $false) {
+          Add-LocalGroupMember -Group 'docker-users' -Member $AuthUsersSID
+        }
+
+    
