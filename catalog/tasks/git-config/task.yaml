@@ -1,0 +1,27 @@
+# This is a git repository cloning task for Dev Box
+
+$schema: 1.0
+name: check-env
+description: Some check script in devbox environment
+author: Ayumu Inaba
+command: "./main.ps1 -name \"{{name}}\" -email \"{{email}}\" "
+parameters:
+  name:
+    default: ''
+    type: string
+    required: true
+    description: git user name.
+  email:
+    default: ''
+    type: string
+    required: true
+    description: git user mail address.
+documentation:
+  notes: |
+    This task is sample and check devbox environment.
+  examples:
+    - name: git-config
+      description: setup git user name and email
+      parameters:
+        name: ayuina
+        email: ayuina@example.com
