@@ -47,7 +47,7 @@ tasks:
         code --install-extension ms-azuretools.vscode-docker
         code --install-extension ms-vscode-remote.vscode-remote-extensionpack
 
-        Start-Process -FilePath "$Env:ProgramFiles\Docker\Docker\Docker Desktop.exe"
+        Start-Process -FilePath 'C:\Program Files\Docker\Docker\Docker Desktop.exe'
       runAsUser: true
 
     
