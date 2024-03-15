@@ -1,8 +1,8 @@
 # This is a git repository cloning task for Dev Box
 
 $schema: 1.0
-name: check-env
-description: Some check script in devbox environment
+name: git-config
+description: git config user and email
 author: Ayumu Inaba
 command: "./main.ps1 -name \"{{name}}\" -email \"{{email}}\" "
 parameters:
