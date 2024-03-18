@@ -15,6 +15,11 @@ tasks:
     parameters:
       repositoryUrl: https://github.com/ayuina/aoai-image-analyzer-sample.git
       directory: C:\Workspaces
+  - name: git-config
+    description: setup git user name and email
+    parameters:
+      name: ayuina
+      email: ayuina@example.com
   - name: choco
     description: Install VSCode
     parameters:
