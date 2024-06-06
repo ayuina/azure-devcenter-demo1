@@ -1,0 +1,136 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.28.1.47646",
+      "templateHash": "610150744247228273"
+    }
+  },
+  "parameters": {
+    "region": {
+      "type": "string"
+    },
+    "spokeIndex": {
+      "type": "int"
+    },
+    "hubVnetName": {
+      "type": "string",
+      "defaultValue": "hub-vnet"
+    },
+    "hubVnetRGName": {
+      "type": "string",
+      "defaultValue": "hub-spoke-rg"
+    }
+  },
+  "variables": {
+    "spokeVnetName": "[format('spoke-{0}-vnet', parameters('spokeIndex'))]",
+    "spokeAdressPrefix": "[format('10.{0}.0.0/16', parameters('spokeIndex'))]",
+    "spokeDefaultSubnetPrefix": "[format('10.{0}.0.0/24', parameters('spokeIndex'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2023-11-01",
+      "name": "[variables('spokeVnetName')]",
+      "location": "[parameters('region')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('spokeAdressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "default",
+            "properties": {
+              "addressPrefix": "[variables('spokeDefaultSubnetPrefix')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+      "apiVersion": "2023-11-01",
+      "name": "[format('{0}/{1}', variables('spokeVnetName'), format('peering-spoke-{0}-to-hub', parameters('spokeIndex')))]",
+      "properties": {
+        "allowForwardedTraffic": true,
+        "allowVirtualNetworkAccess": true,
+        "allowGatewayTransit": false,
+        "useRemoteGateways": false,
+        "remoteVirtualNetwork": {
+          "id": "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('hubVnetRGName')), 'Microsoft.Network/virtualNetworks', parameters('hubVnetName'))]"
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('spokeVnetName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "hubpeering",
+      "resourceGroup": "[parameters('hubVnetRGName')]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "hubVnetName": {
+            "value": "[parameters('hubVnetName')]"
+          },
+          "spokeVnetName": {
+            "value": "[variables('spokeVnetName')]"
+          },
+          "spokeVnetId": {
+            "value": "[resourceId('Microsoft.Network/virtualNetworks', variables('spokeVnetName'))]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.28.1.47646",
+              "templateHash": "5747631303199297691"
+            }
+          },
+          "parameters": {
+            "hubVnetName": {
+              "type": "string"
+            },
+            "spokeVnetName": {
+              "type": "string"
+            },
+            "spokeVnetId": {
+              "type": "string"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+              "apiVersion": "2023-11-01",
+              "name": "[format('{0}/{1}', parameters('hubVnetName'), format('peering-hub-to-{0}', parameters('spokeVnetName')))]",
+              "properties": {
+                "allowForwardedTraffic": true,
+                "allowVirtualNetworkAccess": true,
+                "allowGatewayTransit": false,
+                "useRemoteGateways": false,
+                "remoteVirtualNetwork": {
+                  "id": "[parameters('spokeVnetId')]"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('spokeVnetName'))]"
+      ]
+    }
+  ]
+}
