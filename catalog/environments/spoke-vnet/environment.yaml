@@ -14,7 +14,7 @@ parameters:
 - id: "spokeIndex"
   name: "spokeIndex"
   description: "spoke index number"
-  default: 1
+  default: "1"
   type: "int"
   required: true
 - id: "hubVnetName"
