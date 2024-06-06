@@ -1,5 +1,5 @@
 name: spoke-vnet
-version: 1.0.0
+version: 1.0.1
 summary: Deploy Spoke VNET
 description: Deploys Spoke VNET and Peer with Hub VNET
 runner: ARM
@@ -15,7 +15,7 @@ parameters:
   name: "spokeIndex"
   description: "spoke index number"
   default: "1"
-  type: "int"
+  type: "string"
   required: true
 - id: "hubVnetName"
   name: "hubVnetName"
