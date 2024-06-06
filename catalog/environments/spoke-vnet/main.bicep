@@ -1,5 +1,5 @@
 param region string
-param spokeIndex string 
+param spokeIndex int 
 param hubVnetName string = 'hub-vnet'
 param hubVnetRGName string = 'hub-spoke-rg'
 

@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "13188895851257764427"
+      "templateHash": "610150744247228273"
     }
   },
   "parameters": {
@@ -13,7 +13,7 @@
       "type": "string"
     },
     "spokeIndex": {
-      "type": "string"
+      "type": "int"
     },
     "hubVnetName": {
       "type": "string",

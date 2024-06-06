@@ -8,24 +8,20 @@ parameters:
 - id: "region"
   name: "region"
   description: "Azure region for deployed resources"
-  default: ""
   type: "string"
   required: true
 - id: "spokeIndex"
   name: "spokeIndex"
   description: "spoke index number"
-  default: "1"
-  type: "string"
+  type: "integer"
   required: true
 - id: "hubVnetName"
   name: "hubVnetName"
   description: "name of hub vnet"
-  default: "hub-vnet"
   type: "string"
   required: true
 - id: "hubVnetRGName"
   name: "hubVnetRGName"
   description: "name of resource group, the parent of hub vnet"
-  default: "hub-spoke-rg"
   type: "string"
   required: true
