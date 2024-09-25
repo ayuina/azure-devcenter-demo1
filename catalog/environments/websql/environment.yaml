@@ -1,9 +1,9 @@
 name: WebSql
-version: 1.3.2
+version: 1.3.3
 summary: Azure Web App and SQL Database Environment
 description: Deploys a web app, sql db, application insights
 runner: ARM
-templatePath: main.json
+templatePath: main.bicep
 parameters:
 - id: "region"
   name: "region"
