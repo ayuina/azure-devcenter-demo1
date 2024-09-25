@@ -1,5 +1,5 @@
-name: Functions - dotnet
-version: 1.1.0
+name: Functions-dotnet
+version: 1.1.1
 summary: Azure Functions with Storage account with Queue and Blob
 description: Deploys functions, storage, application insights
 runner: ARM
