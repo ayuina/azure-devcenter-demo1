@@ -1,0 +1,19 @@
+name: Functions - dotnet
+version: 1.1.0
+summary: Azure Functions with Storage account with Queue and Blob
+description: Deploys functions, storage, application insights
+runner: ARM
+templatePath: main.bicep
+parameters:
+- id: "prefix"
+  name: "prefix"
+  description: "prefix name for unique id"
+  default: ""
+  type: "string"
+  required: true
+- id: "region"
+  name: "region"
+  description: "Azure region for deployed resources"
+  default: ""
+  type: "string"
+  required: true
