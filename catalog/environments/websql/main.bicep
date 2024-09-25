@@ -1,16 +1,15 @@
-param prefix string
 param region string
 
-var appSvcName = '${prefix}-web'
-var appSvcPlanName = '${prefix}-asp'
-var sqlSvrName = '${prefix}-sqlsvr'
-var sqlDbName = '${prefix}-sqldb'
-var sqlUserName = prefix
+var postfix = toLower(uniqueString(subscription().id, resourceGroup().name, region))
+var appSvcName = 'webapp-${postfix}'
+var appSvcPlanName = 'asp-${appSvcName}'
+var sqlSvrName = 'sqlsvr-${postfix}'
+var sqlDbName = 'sqldb-${postfix}'
+var sqlUserName = 'sqluser'
 var sqlUserPassword = 'P@ss${uniqueString(resourceGroup().id)}'
 var sqlConstr = 'Server=tcp:${sqlsvr.properties.fullyQualifiedDomainName},1433; Database=${sqlDbName}; User ID=${sqlUserName}; Password=${sqlUserPassword};Trusted_Connection=False;Encrypt=True;'
-
-var logAnalyticsName = '${prefix}-laws'
-var appInsightsName = '${appSvcName}-ai'
+var logAnalyticsName = 'laws-${postfix}'
+var appInsightsName = 'ai-${appSvcName}'
 
 resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: logAnalyticsName
@@ -43,7 +42,7 @@ resource appinsights 'Microsoft.Insights/components@2020-02-02' = {
   }
 }
 
-resource asp 'Microsoft.Web/serverfarms@2022-03-01' = {
+resource asp 'Microsoft.Web/serverfarms@2022-09-01' = {
   name: appSvcPlanName
   location: region
   sku: {
@@ -52,7 +51,7 @@ resource asp 'Microsoft.Web/serverfarms@2022-03-01' = {
   }
 }
 
-resource web 'Microsoft.Web/sites@2022-03-01' = {
+resource web 'Microsoft.Web/sites@2022-09-01' = {
   name: appSvcName
   location: region
   properties:{
@@ -69,7 +68,7 @@ resource web 'Microsoft.Web/sites@2022-03-01' = {
   }
 }
 
-resource metadata 'Microsoft.Web/sites/config@2022-03-01' = {
+resource metadata 'Microsoft.Web/sites/config@2022-09-01' = {
   name: 'metadata'
   parent: web
   properties: {
