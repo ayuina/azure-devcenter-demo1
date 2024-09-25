@@ -1,12 +1,13 @@
-param prefix string
 param region string
 
-var logAnalyticsName = '${prefix}-laws'
-var appInsightsName = '${prefix}-ai'
-var funcStrName = '${prefix}funcstr'
-var dataStrName = '${prefix}datastr'
-var funcAppName = '${prefix}-func'
-var funcPlanName = '${prefix}-func-plan'
+var postfix = toLower(uniqueString(subscription().id, resourceGroup().name, region))
+
+var funcAppName = 'func-${postfix}'
+var funcPlanName = 'plan-${funcAppName}'
+var appInsightsName = 'ai-${funcAppName}'
+var logAnalyticsName = 'laws-${postfix}'
+var funcStrName = 'funcstr${postfix}'
+var dataStrName = 'datastr${postfix}'
 var funcFilesName = '${funcAppName}-files'
 
 var queueTriggerQueueEnvName = 'queue-trigger-queue'
