@@ -14,7 +14,8 @@
 				"ms-azuretools.vscode-bicep",
 				"ms-vscode.azurecli",
 				"GitHub.copilot",
-				"GitHub.copilot-chat"
+				"GitHub.copilot-chat",
+				"humao.rest-client"
 			]
 		}
 	}
