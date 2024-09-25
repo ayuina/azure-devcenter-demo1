@@ -58,7 +58,7 @@ resource web 'Microsoft.Web/sites@2022-09-01' = {
     serverFarmId: asp.id
     clientAffinityEnabled: false
     siteConfig: {
-      netFrameworkVersion: 'v7.0'
+      netFrameworkVersion: 'v8.0'
       ftpsState: 'Disabled'
       use32BitWorkerProcess: false
     }
@@ -82,9 +82,8 @@ resource appsettings 'Microsoft.Web/sites/config@2022-03-01' = {
   properties: {
     APPINSIGHTS_INSTRUMENTATIONKEY: appinsights.properties.InstrumentationKey
     APPLICATIONINSIGHTS_CONNECTION_STRING: appinsights.properties.ConnectionString
-    ApplicationInsightsAgent_EXTENSION_VERSION: '~3'
+    ApplicationInsightsAgent_EXTENSION_VERSION: '~2'
     XDT_MicrosoftApplicationInsights_Mode: 'Recommended'
-    XDT_MicrosoftApplicationInsights_PreemptSdk: '1'
   }
 }
 
