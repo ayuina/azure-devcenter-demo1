@@ -1,5 +1,5 @@
 name: APIM-AOAI-LoadBalance
-version: 1.0.4
+version: 1.0.5
 summary: Deploy API management and Azure OpenAI Service as Backend pool
 description: Deploy API management and Azure OpenAI Service as Backend pool
 runner: ARM
@@ -8,37 +8,48 @@ parameters:
 - id: "apimRegion"
   name: "apimRegion"
   description: "region for main resources"
-  default: "japaneast"
+  type: "string"
+  required: true
+
+- id: "aoaiRegion1"
+  name: "aoaiRegion1"
+  description: "apim backend openai region"
   type: "string"
   required: false
-- id: "aoaiRegions"
-  name: "aoaiRegions"
-  description: "array of backend openai region"
-  default: "[\"swedencentral\", \"eastus2\"]"
-  type: "array"
-  required: false
+
+- id: "aoaiRegion2"
+  name: "aoaiRegion2"
+  description: "apim backend openai region"
+  type: "string"
+  required: true
+
 - id: "modelSku"
   name: "modelSku"
   description: "openai deployment model"
-  default: "Standard"
   type: "string"
-  required: false
+  required: true
+  allowed:
+    - "Standard"
+
 - id: "modelName"
   name: "modelName"
   description: "openai deployment model"
-  default: "gpt-4o"
   type: "string"
-  required: false
+  required: true
+  allowed:
+    - "gpt-4o"
+
 - id: "modelVersion"
   name: "modelVersion"
   description: "openai deployment model"
-  default: "2024-05-13"
   type: "string"
-  required: false
+  required: true
+  allowed:
+    - "2024-05-13"
+
 - id: "modelCapacity"
   name: "modelCapacity"
   description: "openai deployment model"
-  default: 10
   type: "integer"
-  required: false
+  required: true
 

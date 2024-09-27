@@ -1,5 +1,6 @@
 param apimRegion string
-param aoaiRegions array
+param aoaiRegion1 string
+param aoaiRegion2 string
 param modelSku string
 param modelName string
 param modelVersion string
@@ -13,7 +14,7 @@ var apimPublisher = 'contoso'
 var apimPublisherEmail = 'contoso@example.com'
 var aoaiSpec = loadTextContent('./aoai-spec.json')
 var aoaiPolicy = loadTextContent('./aoai-policy.xml')
-
+var aoaiRegions = [aoaiRegion1, aoaiRegion2]
 
 resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: logAnalyticsName
