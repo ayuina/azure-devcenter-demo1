@@ -1,5 +1,5 @@
 name: APIM-AOAI-Simple
-version: 1.0.1
+version: 1.1.0
 summary: Deploy API management and Azure OpenAI Service as single backend 
 description: Deploy API management and Azure OpenAI Service as single backend 
 runner: ARM
@@ -15,6 +15,15 @@ parameters:
     - 'swedencentral'
     - 'eastus2'
     - 'southeastasia'
+
+- id: "apimSku"
+  name: "apimSku"
+  description: "API Management SKU"
+  type: "string"
+  required: true
+  allowed:
+    - 'Consumption'
+    - 'Development'
 
 - id: "modelSku"
   name: "modelSku"

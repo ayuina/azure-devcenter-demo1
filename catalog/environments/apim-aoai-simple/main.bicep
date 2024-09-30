@@ -1,4 +1,5 @@
 param region string
+param apimSku string
 param modelSku string
 param modelName string
 param modelVersion string
@@ -48,8 +49,8 @@ resource apiman 'Microsoft.ApiManagement/service@2023-09-01-preview' = {
   name: apimName
   location: region
   sku: {
-    name: 'Consumption'
-    capacity: 0
+    name: apimSku
+    capacity: apimSku == 'Consumption' ? 0 : 1
   }
   properties: {
     publisherName: apimPublisher
