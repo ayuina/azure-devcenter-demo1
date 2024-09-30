@@ -1,0 +1,19 @@
+@deploy=gpt-4o
+@apiVersion=2024-06-01
+
+POST https://{{$dotenv APIM_NAME}}.azure-api.net/openai/deployments/{{deploy}}/chat/completions?api-version={{apiVersion}} HTTP/1.1
+Content-Type: application/json
+api-key: {{$dotenv APIM_KEY}}
+
+{
+    "messages": [
+        {
+            "role":"system",
+            "content": "you are a helpful assistant"
+        },
+        {
+            "role": "user",
+            "content": "Hello"
+        }
+    ]
+}

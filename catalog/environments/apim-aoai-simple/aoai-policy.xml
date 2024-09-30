@@ -1,0 +1,16 @@
+<policies>
+    <inbound>
+        <set-backend-service id="aoai-backend" backend-id="aoai-backend" />
+        <authentication-managed-identity resource="https://cognitiveservices.azure.com/" />
+        <base />
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>
