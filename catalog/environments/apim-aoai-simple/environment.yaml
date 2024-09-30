@@ -1,0 +1,49 @@
+name: APIM-AOAI-Simple
+version: 1.0.0
+summary: Deploy API management and Azure OpenAI Service as single backend 
+description: Deploy API management and Azure OpenAI Service as single backend 
+runner: ARM
+templatePath: main.bicep
+parameters:
+
+- id: "region"
+  name: "region"
+  description: "Azure region for deployed resources"
+  type: "string"
+  required: false
+  allowed:
+    - 'swedencentral'
+    - 'eastus2'
+    - 'southeastasia'
+  default: "swedencentral"
+
+- id: "modelSku"
+  name: "modelSku"
+  description: "openai deployment model"
+  type: "string"
+  required: false
+  allowed:
+    - "Standard"
+
+- id: "modelName"
+  name: "modelName"
+  description: "openai deployment model"
+  type: "string"
+  required: true
+  allowed:
+    - "gpt-4o"
+
+- id: "modelVersion"
+  name: "modelVersion"
+  description: "openai deployment model"
+  type: "string"
+  required: true
+  allowed:
+    - "2024-05-13"
+
+- id: "modelCapacity"
+  name: "modelCapacity"
+  description: "openai deployment model"
+  type: "integer"
+  required: true
+

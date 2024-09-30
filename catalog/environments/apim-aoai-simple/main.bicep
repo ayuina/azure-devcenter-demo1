@@ -1,8 +1,8 @@
 param region string
-param modelSku string = 'Standard'
-param modelName string = 'gpt-4o'
-param modelVersion string = '2024-05-13'
-param modelCapacity int = 10
+param modelSku string
+param modelName string
+param modelVersion string
+param modelCapacity int
 
 var postfix = toLower(uniqueString(subscription().id, region, resourceGroup().name))
 var logAnalyticsName = 'laws-${postfix}'
