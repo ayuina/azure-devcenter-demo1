@@ -58,14 +58,16 @@ resource apiman 'Microsoft.ApiManagement/service@2023-09-01-preview' = {
   }
   identity: { type: 'SystemAssigned' }
 
-  resource ailogger 'loggers' = {
-    name: '${appInsightsName}-logger'
-    properties: {
-      loggerType: 'applicationInsights'
-      resourceId: appinsights.id
-      credentials: {
-        instrumentationKey: appinsights.properties.InstrumentationKey
-      }
+}
+
+resource ailogger 'Microsoft.ApiManagement/service/loggers@2023-09-01-preview' = {
+  parent: apiman
+  name: '${appInsightsName}-logger'
+  properties: {
+    loggerType: 'applicationInsights'
+    resourceId: appinsights.id
+    credentials: {
+      instrumentationKey: appinsights.properties.InstrumentationKey
     }
   }
 }
@@ -150,7 +152,7 @@ resource aoaiApi 'Microsoft.ApiManagement/service/apis@2023-09-01-preview' = {
   resource aidiag 'diagnostics' = {
     name: 'applicationinsights'
     properties: {
-      loggerId: apiman::ailogger.id
+      loggerId: ailogger.id
       alwaysLog: 'allErrors'
       sampling: {
         samplingType: 'fixed'
@@ -160,5 +162,43 @@ resource aoaiApi 'Microsoft.ApiManagement/service/apis@2023-09-01-preview' = {
       metrics: true
       verbosity: 'information'
     }
+  }
+}
+
+resource group 'Microsoft.ApiManagement/service/groups@2023-09-01-preview' = if (apimSku != 'Consumption') {
+  parent: apiman
+  name: 'aidevelopers'
+  properties:{
+    displayName: 'AI Developers'
+    description: 'Developers who are interested in AI'
+    type: 'custom'
+  }
+}
+
+resource product 'Microsoft.ApiManagement/service/products@2023-09-01-preview' = {
+  parent: apiman
+  name: 'ai-apis-product'
+  properties:{
+    displayName: 'Azure AI APIs Product'
+    description: 'This product contains Azure OpenAI etc...'
+    approvalRequired: true
+    subscriptionRequired: true
+    state: 'published'
+  }
+}
+
+resource productApiLink 'Microsoft.ApiManagement/service/products/apiLinks@2023-09-01-preview' = {
+  parent: product
+  name: 'openai-link'
+  properties:{
+    apiId: aoaiApi.id
+  }
+}
+
+resource productGroupLink 'Microsoft.ApiManagement/service/products/groupLinks@2023-09-01-preview' = if (apimSku != 'Consumption') {
+  parent: product
+  name: 'aidevelopers-link'
+  properties:{
+    groupId: group.id
   }
 }
